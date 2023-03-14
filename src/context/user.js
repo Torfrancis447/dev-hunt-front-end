@@ -14,6 +14,7 @@ function UserProvider({children}){
             r.json().then((userInfo) => {
               setUser(userInfo)
               localStorage.removeItem("job")
+              
             });
           } 
         });

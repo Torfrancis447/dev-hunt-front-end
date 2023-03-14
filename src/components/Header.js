@@ -19,50 +19,41 @@ const Header = () => {
       }
     });
   }
-
+console.log(user)
   return (
     <Box py={10} bgcolor="#332C39" color="white">
       <Grid container justifyContent="center" alignItems="center">
         <Grid item xs={10}>
-          <Box display="flex" justifyContent="space-between">
+          <Box display="flex" justifyContent={user ? "space-around" : "center"}>
             {/* <Typography variant="h5"> Dev Hunt </Typography> */}
-            {user && user.is_employer == true ? (
+            {/* <Button sx={{ fontWeight: 600 }} component={Link} to="/edit-profile">
+              Edit Profile
+            </Button> */}
+           
+            {user && user.is_employer ? (
               <>
-                <Button
-                  sx={{ fontWeight: 600 }}
-                  color="primary"
-                  disableElevation
-                >
+                <Button sx={{ fontWeight: 600 }} color="primary" component ={Link} to="/new-job" disableElevation>
                   Post a Job
                 </Button>
-                <Button
-                  sx={{ fontWeight: 600 }}
-                  component={Link}
-                  to="/application"
-                >
+                <Button sx={{ fontWeight: 600 }} component={Link} to="/employee-application">
                   {" "}
-                  Applied{" "}
+                  Applications{" "}
                 </Button>
+                {/* <Button sx={{ fontWeight: 600 }} component={Link} to="/applicants">
+                  {" "}
+                  Applicants
+                </Button> */}
               </>
-            ) : (
-              <> </>
-            )}
-
-            <Button
-              sx={{ fontWeight: 600 }}
-              component={Link}
-              to="/applicationform"
-            >
-              {" "}
-              Application
-            </Button>
-
-            <Button sx={{ fontWeight: 600 }} component={Link} to="/home">
-              {" "}
-              Jobs{" "}
-            </Button>
-            {user ? (
+            ) : user ? (
               <>
+              <Button sx={{ fontWeight: 600 }} component={Link} to="/my-applications">
+                  {" "}
+                 My Applications{" "}
+                </Button>
+                <Button sx={{ fontWeight: 600 }} component={Link} to="/home">
+                  {" "}
+                  Jobs{" "}
+                </Button>
                 <Button sx={{ fontWeight: 600 }} onClick={() => handleLogout()}>
                   {" "}
                   Logout{" "}
@@ -80,6 +71,10 @@ const Header = () => {
               </>
             ) : (
               <>
+              <Button sx={{ fontWeight: 600 }} component={Link} to="/">
+                  {" "}
+                 Home{" "}
+                </Button>
                 <Button sx={{ fontWeight: 600 }} component={Link} to="/signup">
                   {" "}
                   Signup{" "}

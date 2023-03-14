@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useHistory} from 'react-router-dom';
 import {
   AppBar,
   Box,
@@ -19,13 +19,13 @@ function Header() {
   const [mobileMenuAnchor, setMobileMenuAnchor] = useState(null);
   const isMobileMenuOpen = Boolean(mobileMenuAnchor);
   const { user, setUser } = useContext(UserContext)
-
+ let history=useHistory()
   function handleLogout() {
     fetch("http://localhost:3000/logout", { method: "DELETE" }).then((r) => {
       if (r.ok) {
         setUser(null);
         localStorage.removeItem("userId");
-        // history.push("/login");
+        history.push("/login");
       }
     });
   }
@@ -66,14 +66,17 @@ function Header() {
                 <Button component={RouterLink} to="/applied-jobs" sx={{ fontWeight: 600 }} color="inherit">
                   Applied
                 </Button>
+                <Button component={RouterLink} to="/edit-profile" sx={{ fontWeight: 600 }} color="inherit">
+                  Edit Profile
+                </Button>
               </>
             ) : (
               <>
-                <Button component={RouterLink} to="/application" sx={{ fontWeight: 600 }} color="inherit">
+                <Button component={RouterLink} to="/my-applications" sx={{ fontWeight: 600 }} color="inherit">
                   Application
                 </Button>
                 <Button component={RouterLink} to="/home" sx={{ fontWeight: 600 }} color="inherit">
-                  Jobs
+                  home
                 </Button>
               </>
             )}
@@ -110,10 +113,10 @@ function Header() {
           >
             {user && user.is_employer === true && (     
               <Box>        
-                <MenuItem component={RouterLink} to="/job-post" onClick={handleMobileMenuClose}>
-                  Post a Job
+                <MenuItem component={RouterLink} to="/edit-profile" onClick={handleMobileMenuClose}>
+                  Edit Profile
                 </MenuItem>
-                <MenuItem component={RouterLink} to="/applied-jobs" onClick={handleMobileMenuClose}>
+                <MenuItem component={RouterLink} to="/my-applications" onClick={handleMobileMenuClose}>
                   Applied
                 </MenuItem>
                 </Box>              
@@ -121,7 +124,9 @@ function Header() {
             {user ? (
               <Box>
                 <MenuItem onClick={() => {handleLogout(); handleMobileMenuClose();}}>Logout</MenuItem>
-
+                <MenuItem onClick={handleMobileMenuClose} component={RouterLink} to="/edit-profile"  color="inherit">
+                  Edit Profile
+                </MenuItem>
                 <MenuItem onClick={handleMobileMenuClose}>
                   <Avatar
                     sx={{

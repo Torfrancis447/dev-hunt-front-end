@@ -9,6 +9,7 @@ import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en.json'
 import ru from 'javascript-time-ago/locale/ru.json'
 import { UserProvider } from "./context/user"
+import { JobProvider } from './context/job';
 
 TimeAgo.addDefaultLocale(en)
 TimeAgo.addLocale(ru)
@@ -16,11 +17,13 @@ TimeAgo.addLocale(ru)
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Router>
+  <JobProvider>
     <UserProvider>
       <ThemeProvider theme={theme}>
         <App />
       </ThemeProvider>
     </UserProvider>
+    </JobProvider>
   </Router>
 );
 

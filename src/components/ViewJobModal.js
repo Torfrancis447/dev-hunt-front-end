@@ -1,18 +1,23 @@
-import React,{ useState } from "react";
+import React,{ useState, useContext } from "react";
 import { Box, Dialog, Button, DialogActions, DialogContent, Grid, DialogTitle, IconButton, Typography } from "@mui/material";
 import CancelIcon from "@mui/icons-material/Cancel"
 import { useHistory } from "react-router-dom";
+import { JobContext } from "../context/job";
+
 const ViewJobModal = ({job, handleClose}) => {
-    // console.log(!!Object.keys(job).length)
+  const { currentJob, setCurrentJob } = useContext(JobContext)
+
 const[loading, setLoading]=useState(false)
 let history= useHistory()
 function handleApplication(){
-    localStorage.removeItem("job")
-    localStorage.setItem("job", JSON.stringify(job))
+    setCurrentJob(job)    
     history.push('/applicationform')
     
     
 }
+
+const number = job.compensation
+const formattedNumber = number?.toLocaleString("en-US")
 
 
     return (
@@ -24,10 +29,10 @@ function handleApplication(){
             alignItems="center"
           >
             {job.title}
+            <Box>{!!Object.keys(job).length && job.company.name}</Box>
             <IconButton onClick={handleClose}>
               <CancelIcon />
             </IconButton>
-            <Box>{!!Object.keys(job).length && job.company.name}</Box>
           </Box>
         </DialogTitle>
         <DialogContent>
@@ -35,7 +40,7 @@ function handleApplication(){
             <Box display="flex">
               <Typography>Posted on:</Typography>
               <Typography>
-                {!!Object.keys(job).length && job.created_at}
+                {!!Object.keys(job).length && job.posted_time}
               </Typography>
             </Box>
             <Box display="flex">
@@ -47,16 +52,20 @@ function handleApplication(){
               <Typography>{job.location_type}</Typography>
             </Box>
           </Box>
+          <Box>
+          <Typography> Description: </Typography>
+            {job.description}
+          </Box>
           <Box display="flex">
-            {job.is_hourly === false ? (
+            
               <Box>
-                <Typography>${job.salary}</Typography>
+                <Typography>{job.compensation_type}:</Typography>
               </Box>
-            ) : (
+            
               <Box>
-                <Typography>${job.hourly}</Typography>
+                <Typography>${formattedNumber}</Typography>
               </Box>
-            )}
+            
           </Box>
           <Box>
           <Grid container justifyContent="space-between">
@@ -67,6 +76,7 @@ function handleApplication(){
               </Grid>))}
               </Grid>
           </Box>
+          
         </DialogContent>
         <DialogActions>
             <Button variant="outlined" onClick={handleApplication}> Apply </Button>

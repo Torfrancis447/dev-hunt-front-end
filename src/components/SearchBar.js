@@ -4,7 +4,7 @@ import { Box, Button, Select, MenuItem } from "@mui/material";
 
 
 
-  const SearchBar = ({ setFilteredJobs, jobs }) => {
+  const SearchBar = ({ setFilteredJobs, jobs}) => {
     
     const [jobSearch, setJobSearch] = useState({
       type: 'full-time',
@@ -79,6 +79,8 @@ import { Box, Button, Select, MenuItem } from "@mui/material";
         <Button variant="contained" color="secondary" disableElevation onClick={handleClear}>
           Clear
         </Button>
+        
+        
       </Box>
     );
   };

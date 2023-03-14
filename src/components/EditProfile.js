@@ -1,70 +1,117 @@
 import React, { useState, useContext } from "react"
 import { UserContext } from "../context/user";
-import { Typography, TextField, Input } from "@mui/material";
+import { Typography, Grid, Button, TextField, Input } from "@mui/material";
 
 const EditProfile = () => {
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("")
-    const [email, setEmail] = useState("")
-    const [image, setImage] = useState([])
+  const { user, setUser } = useContext(UserContext);
+  const [username, setUsername] = useState(user.username);
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState(user.email);
+  const [image, setImage] = useState(null);
+  const [passwordConfirmation, setPasswordConfirmation] = useState("");
+  const [name, setName] = useState(user.name);
 
-    const { user, setUser } = useContext(UserContext)
+    const handleImageChange = (e) => {
+      setImage(e.target.files[0]);
+  }
 
-
-    function handSubmit(){
-
+    
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const data = new FormData();
+    data.append("user[:id]", user.id)
+    data.append("user[name]", name);
+    data.append("user[username]", username);
+    data.append("user[email]", email);
+    if (password) {
+      data.append("user[password]", password);
+      data.append("user[password_confirmation]", passwordConfirmation);
     }
+    if (image) {
+      data.append("user[image]", image);
+    }
+    fetch(`http://localhost:3000/editprofile/${user.id}`, {
+      method: "PATCH",
+      body: data,
+    })
+      .then((r) => r.json())
+      .then((updatedUser) => setUser(updatedUser));
+  };
 
     return (
+      <form onSubmit={handleSubmit}>
         <Grid
-        alignItems="center"
         p={2}
-        mt={-5}
-        mb={2}
-         sx={{
-           backgroundColor: "#FFFF",
-           display: "flex",
-           boxShadow: "0px 1px 5px rgba(0, 0, 0, 0.1)",
-           boderRadius: "5px",
-           display: 'flex',
+          mt={-5}
+          mb={2}       
+        spacing={2}
+        container
+        alignItems="center"
+        sx={{
+          backgroundColor: "#FFFF",
+          boxShadow: "0px 1px 5px rgba(0, 0, 0, 0.1)",
+          boderRadius: "5px",          
             flexDirection: 'column',
             alignItems: 'center',}}
         >
-        <Typography> Login </Typography>
+        <Typography variant="h4"color="#332C39"> Edit Profile </Typography>
+        <Grid item xs={6}>
+        <Typography> Username </Typography>
       <TextField
-        label="Username"
-        
+        placeholder={user.username}        
         value={username}
         onChange={(event) => setUsername(event.target.value)}
-        margin="normal"
+       
       />
+      </Grid>
+      <Grid item xs={6}>
+      <Typography> Name </Typography>
+      <TextField
+        placeholder={user.name}        
+        value={name}
+        onChange={(event) => setName(event.target.value)}
+        
+      />
+      </Grid>
+      <Grid item xs={6}>
       <TextField
         label="Password"
-        type="password"
-        
+        type="password"        
         value={password}
         onChange={(event) => setPassword(event.target.value)}
-        margin="normal"
+        
       />
+      </Grid>
+      <Grid item xs={6}>
+      <TextField
+        label="Password Conformation"
+        type="password"        
+        value={passwordConfirmation}
+        onChange={(event) => setPasswordConfirmation(event.target.value)}
+        
+      />
+      </Grid>
+      <Grid item xs={4}>
       <Input
+      
           label="Image"
           type="file"          
           inputProps={{ accept: "image/*" }}
-          onChange={(event) => setImage(event.target.files[0])}
+          onChange={handleImageChange}
           name="image"
         />
+      </Grid>
       <Button 
         variant="contained"
         color="primary"
-        
-        onClick={handleLogin}
+        type="submit"       
       >
         Submit
       </Button>
         
 
         </Grid>
-
+  </form>
     )
 };
 

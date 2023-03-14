@@ -41,7 +41,7 @@ export default createTheme({
     },
     MuiFilledInput: {
       input: {
-        height: "49px",
+        height: "40px",
         padding: "0px 0 0 10px",
       },
     },

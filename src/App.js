@@ -42,6 +42,7 @@ function App() {
       <Switch>
         {user ? (
           <>
+          
             <Route exact path="/">
               <Hero />
             </Route>

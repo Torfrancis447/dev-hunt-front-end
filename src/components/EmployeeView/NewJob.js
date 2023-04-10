@@ -9,19 +9,20 @@ import {
   TextField,
   MenuItem,
   Select,
+  InputLabel
 } from "@mui/material";
 
 const NewJob = () => {
   const { user, setUser } = useContext(UserContext);
   const [newJob, setNewJob] = useState({
     title: "",
-    location_type: "",
+    location_type: "Location Type",
     company_id: user.employee_data[0].company.id,
     location: "",
-    compensation_type: "",
+    compensation_type: "Compensation Type",
     compensation: "",
     description: "",
-    employment_type: "",
+    employment_type: "Employment Type",
   });
 
   function handleChange(e) {
@@ -55,35 +56,20 @@ const NewJob = () => {
         })
           setNewJob({
               title: "",
-              location_type: "",
+              location_type: "Location Type",
               company: user.employee_data[0].company.id,
               location: "",
-              compensation_type: "",
+              compensation_type: "Compensation Type",
               compensation: "",
               description: "",
-              employment_type:"",
+              employment_type:"Employment Type",
             })
           })
           .catch()
   }
   return (
     <form onSubmit={handleSubmit}>
-      {/* <Grid 
-    spacing={2}
-    p={2}
-    mt={-5}    
-    container 
-    justifyContent="center"
-    sx={{
-          backgroundColor: "#FFFF",
-          boxShadow: "0px 1px 5px rgba(0, 0, 0, 0.1)",
-          boderRadius: "5px"}}
-    > */}
-      {/* <Grid item> */}
-
-      {/* </Grid>
-    </Grid> */}
-
+      
       <Grid
         spacing={2}
         container
@@ -142,6 +128,7 @@ const NewJob = () => {
           />
         </Grid>
         <Grid item xs={6} md={8}>
+        
           <Select
             fullWidth
             label="Salary"
@@ -149,7 +136,9 @@ const NewJob = () => {
             variant="filled"
             name="compensation_type"
             value={newJob.compensation_type}
+            defaultValue="Compensation Type"
           >
+            <MenuItem value="Compensation Type">Compensation Type</MenuItem>
             <MenuItem value="Salary">Salary</MenuItem>
             <MenuItem value="Hourly">Hourly</MenuItem>
           </Select>
@@ -160,9 +149,11 @@ const NewJob = () => {
             onChange={handleChange}
             name="employment_type"
             value={newJob.employment_type}
+            defaultValue="Employment Type"
             variant="filled"
             fullWidth
           >
+            <MenuItem disabled value="Employment Type">Employment Type</MenuItem>
             <MenuItem value="full-time">Full Time</MenuItem>
             <MenuItem value="part-Time">Part Time</MenuItem>
             <MenuItem value="contract">Contract</MenuItem>
@@ -174,8 +165,10 @@ const NewJob = () => {
             variant="filled"
             name="location_type"
             value={newJob.location_type}
+            defaultValue="Location Type"
             fullWidth
           >
+            <MenuItem value="Location Type">Location Type</MenuItem>
             <MenuItem value="remote">Remote</MenuItem>
             <MenuItem value="hybrid">Hybrid</MenuItem>
             <MenuItem value="on-site">On-Site</MenuItem>

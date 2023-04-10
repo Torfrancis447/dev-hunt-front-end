@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { styled } from "@mui/system";
 import {
+  Box,
   TextField,
   Button,
   Grid,
@@ -55,6 +56,7 @@ export default function SignUpForm() {
         .then(resp => resp.json())
         .then((companyData) => {
           setCompanies(companyData)
+          
         })
   }, [])
 
@@ -72,7 +74,7 @@ export default function SignUpForm() {
       name:newCompanyName,
       headquarters:newHeadquarters
       }
-      console.log(newCompany)
+      
     fetch('http://localhost:3000/new-company', {
       method: "POST",
       headers: {"Content-Type": "application/json"},
@@ -81,7 +83,7 @@ export default function SignUpForm() {
       if(r.ok) {
         r.json().then((companyInfo) =>{
           setNewCompanyName("")
-          setNewHeadquarters("")
+          setNewHeadquarters("")          
           setCompanies([...companies, companyInfo])
         });
       } else {
@@ -102,7 +104,7 @@ export default function SignUpForm() {
     data.append("user[name]", name);
     data.append("user[email]", email);    
     data.append("user[password]", password);
-    data.append("user[password_confirmation]", passwordConfirmation)
+    data.append("user[password_confirmation]", passwordConfirmation);
     isEmployer ? data.append("user[company_id]", company) && 
     data.append("user[is_employer]", isEmployer) : data.append("user[is_employer]", isEmployer);      
     fetch("http://localhost:3000/signup", {
@@ -249,12 +251,15 @@ export default function SignUpForm() {
             
               <Dialog open={open} fullWidth>
               <form onSubmit={handleSubmit}>
+              <Box display="Flex" justifyContent="space-between"
+            alignItems="center" flexDirection="row"> 
               <DialogTitle>
               <Typography> Company Name </Typography>
               <IconButton onClick={handleClose}>
                 <CancelIcon />
               </IconButton>
               </DialogTitle>
+              </Box>
               <DialogContent>
               <FilledInput onChange={(e) => setNewCompanyName(e.target.value)} type="text" placeholder="Company Name" value={newCompanyName} />
               <FilledInput onChange={(e)=> setNewHeadquarters(e.target.value)} type="text" placeholder="Company Headquaters" value={newHeadquarters} />

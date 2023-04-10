@@ -75,7 +75,7 @@ const NewJobModal = ({open, handleCloseJob}) => {
     const skillObj ={
       name: newSkill
     }
-    fetch("http://localhost:3000/skills", {
+    fetch("http://localhost:3000/create_skills", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

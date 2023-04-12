@@ -7,6 +7,9 @@ import { useHistory } from "react-router-dom";
 const Applicant = ({ applicant }) => {
   const [disabled, setDisabled] = useState(false);
   const { user, setUser } = useState(UserContext);
+  const publicKey = process.env.REACT_APP_EMAILJS_PUBLIC_KEY
+  const templateId = process.env.REACT_APP_EMAILJS_TEMPLATE_ID
+  const serviceId= process.env.REACT_APP_EMAILJS_SERVICE_ID
   const {
     applied_time,
     resume_url,
@@ -28,10 +31,8 @@ const Applicant = ({ applicant }) => {
     window.open(resume_url, "_blank");
   };
   console.log(avaliability);
-  function handleEmail() {
-    const templateID = "template_32a8ov7";
-    const serviceID = "service_0fola18";
-    const publicKey = "9YObmu3xFlN4ceQik";
+  function handleEmail() {    
+    
     const applicantData = {
       name: name,
       company: company_name,
@@ -40,7 +41,7 @@ const Applicant = ({ applicant }) => {
       email: email,
     };
     console.log(email);
-    emailjs.send(serviceID, templateID, applicantData, publicKey);
+    emailjs.send(serviceId, templateId, applicantData, publicKey);
     setDisabled(true);
   }
 

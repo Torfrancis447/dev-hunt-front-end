@@ -11,6 +11,7 @@ import {
   Select,
   InputLabel
 } from "@mui/material";
+import SkillSearch from "./SkillSearch";
 
 const NewJob = () => {
   const { user, setUser } = useContext(UserContext);
@@ -66,9 +67,18 @@ const NewJob = () => {
             })
           })
           .catch()
+
+          
   }
+  
+  const handleKeyDown = (event) => {
+            if (event.key === "Enter") {
+              event.preventDefault();
+            }
+          }
+          
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} onKeyDown={handleKeyDown}>
       
       <Grid
         spacing={2}
@@ -90,7 +100,7 @@ const NewJob = () => {
             direction="column"
             justifyContent="center"
             alignItems="center"
-            fullWidth
+            
           >
             <Grid item>
               <Typography variant="h5"color="#332C39" sx={{ fontWeight: 600 }}> Create New Job</Typography>
@@ -175,6 +185,9 @@ const NewJob = () => {
           </Select>
         </Grid>
         <Grid item xs={6} md={8}>
+          <SkillSearch />
+          </Grid>
+        <Grid item xs={6} md={8}>
           <TextField
             rows={4}
             multiline
@@ -190,11 +203,10 @@ const NewJob = () => {
           <Grid container
             direction="column"
             justifyContent="center"
-            alignItems="center"
-            fullWidth
+            alignItems="center"            
             mb={5}
-            >
-            
+            >          
+          
             <Grid item>
               <Button size="large" variant="contained" color="primary" type="submit">
                 Submit

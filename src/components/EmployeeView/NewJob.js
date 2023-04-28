@@ -25,6 +25,7 @@ const NewJob = () => {
     description: "",
     employment_type: "Employment Type",
   });
+  const [skillOptions, setSkillOptions] =useState([])
 
   function handleChange(e) {
     const name = e.target.name;
@@ -34,7 +35,10 @@ const NewJob = () => {
 
   function handleSubmit(e) {
     e.preventDefault();
-
+    const newJobWithSkills = {
+      ...newJob,
+      jobSkills: skillOptions.map((skill) => skill.name),
+    };
     fetch("http://localhost:3000/jobs", {
       method: "POST",
       headers: {
@@ -185,7 +189,7 @@ const NewJob = () => {
           </Select>
         </Grid>
         <Grid item xs={6} md={8}>
-          <SkillSearch />
+          <SkillSearch setSkillOptions={setSkillOptions}/>
           </Grid>
         <Grid item xs={6} md={8}>
           <TextField

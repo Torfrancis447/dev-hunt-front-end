@@ -71,7 +71,7 @@ const EmployeeJobCard = ({ jobs, handleDelete, job, handleCurrentJob}) => {
     }
   }
 
-  const jobIndex = jobs.findIndex((j) => j.id === job.id)
+  const jobIndex = jobs.findIndex((job) => job.id === job.id)
 
   function openModal(){
   setDialog(true)
@@ -219,10 +219,10 @@ const EmployeeJobCard = ({ jobs, handleDelete, job, handleCurrentJob}) => {
                   <Grid item xs={12}>
                     <Box mt={2}>
                       <Box display="flex" flexWrap="wrap">
-                        {job.skills.map((skill, id) => (
+                        {/* {job.skills.map((skill, id) => (
                           <StyledSkills onClick={() => handleSkillClick(skill)} 
                           selected={selectedSkills.some((s) => s.id === skill.id)} key={id}>{skill.name}</StyledSkills>
-                        ))}
+                        ))} */}
                       </Box>
                     </Box>
                   </Grid>
